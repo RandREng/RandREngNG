@@ -1,0 +1,38 @@
+{
+  "name": "randr-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/randr-lib/src",
+  "prefix": "lib",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/randr-lib/tsconfig.lib.json",
+        "project": "libs/randr-lib/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/randr-lib/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "libs/randr-lib/src/test.ts",
+        "tsConfig": "libs/randr-lib/tsconfig.spec.json",
+        "karmaConfig": "libs/randr-lib/karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/randr-lib/**/*.ts",
+          "libs/randr-lib/**/*.html"
+        ]
+      }
+    }
+  }
+}

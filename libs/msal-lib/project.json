@@ -1,0 +1,35 @@
+{
+  "name": "msal-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/msal-lib/src",
+  "prefix": "lib",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/msal-lib/tsconfig.lib.json",
+        "project": "libs/msal-lib/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/msal-lib/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "libs/msal-lib/src/test.ts",
+        "tsConfig": "libs/msal-lib/tsconfig.spec.json",
+        "karmaConfig": "libs/msal-lib/karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/msal-lib/**/*.ts", "libs/msal-lib/**/*.html"]
+      }
+    }
+  }
+}
