@@ -1,8 +1,9 @@
+
 /*
  * Public API Surface of randr-lib
  */
 
-export * from './generic-validator';
+export * from './lib/generic-validator';
 
 export * from './lib/classes/dictionary';
 
@@ -28,5 +29,5 @@ export * from './lib/services/alert.service';
 export * from './lib/services/busy.service';
 export * from './lib/services/http.service';
 export * from './lib/services/layout.service';
-export * from './lib/services/storage.service';
+//export * from './lib/services/storage.service';
 export * from './lib/services/voice-recognition.service';

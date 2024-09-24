@@ -13,9 +13,12 @@ import { IsDirty } from '../interfaces/is-dirty';
 export class DirtyCheckGuard {
   canDeactivate(
     component: IsDirty,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _currentRoute: ActivatedRouteSnapshot,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _currentState: RouterStateSnapshot,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _nextState?: RouterStateSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/* import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ export class StorageService {
     this.storage = sessionStorage; // localStorage;
   }
 
-  public retrieve(key: string): any {
+  public retrieve(key: string): never {
     const item = this.storage.getItem(key);
 
     if (item && item !== 'undefined') {
@@ -20,7 +20,8 @@ export class StorageService {
     return;
   }
 
-  public store(key: string, value: any) {
+  public store(key: string, value: never) {
     this.storage.setItem(key, JSON.stringify(value));
   }
 }
+ */

@@ -1,14 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  MSAL_GUARD_CONFIG,
-  MSAL_INSTANCE,
-  MsalBroadcastService,
-  MsalGuard,
-  MsalService,
-} from '@azure/msal-angular';
-import { TestInstanceFactory, TestGuardConfigFactory } from './test.factories';
+import { MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalBroadcastService, MsalGuard, MsalService } from '@azure/msal-angular';
 
+import { TestInstanceFactory, TestGuardConfigFactory } from './test.factories';
 import { AuthGuard } from './auth.guard';
 
 describe('AuthGuardGuard', () => {
@@ -28,7 +22,7 @@ describe('AuthGuardGuard', () => {
           provide: MSAL_GUARD_CONFIG,
           useFactory: TestGuardConfigFactory,
         },
-      ],
+      ]
     });
     guard = TestBed.inject(AuthGuard);
   });

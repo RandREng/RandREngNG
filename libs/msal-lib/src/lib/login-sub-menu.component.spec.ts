@@ -1,23 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import {
-  MSAL_GUARD_CONFIG,
-  MSAL_INSTANCE,
-  MsalBroadcastService,
-  MsalGuard,
-  MsalService,
-} from '@azure/msal-angular';
-import { TestInstanceFactory, TestGuardConfigFactory } from './test.factories';
-
-import { LoginSubMenuComponent } from './login-sub-menu.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
-describe('MsalLibComponent', () => {
+import { MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalBroadcastService, MsalGuard, MsalService } from '@azure/msal-angular';
+
+import { TestGuardConfigFactory, TestInstanceFactory } from './test.factories';
+import { LoginSubMenuComponent } from './login-sub-menu.component';
+
+describe('LoginSubMenuComponent', () => {
   let component: LoginSubMenuComponent;
   let fixture: ComponentFixture<LoginSubMenuComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [LoginSubMenuComponent],
       providers: [
         provideNoopAnimations(),
@@ -34,7 +28,7 @@ describe('MsalLibComponent', () => {
         },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginSubMenuComponent);

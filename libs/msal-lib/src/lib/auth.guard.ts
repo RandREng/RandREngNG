@@ -7,7 +7,6 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-import { AlertService } from 'randr-lib';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -15,12 +14,10 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthGuard {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -33,10 +30,8 @@ export class AuthGuard {
     return true;
   }
 
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canActivateChild(_childRoute: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -49,10 +44,8 @@ export class AuthGuard {
     return true;
   }
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canLoad(_route: Route, _segments: UrlSegment[]):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean

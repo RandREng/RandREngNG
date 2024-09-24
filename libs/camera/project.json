@@ -1,14 +1,17 @@
 {
   "name": "camera",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
   "sourceRoot": "libs/camera/src",
   "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/camera/ng-package.json"
+        "project": "libs/camera/ng-package.json",
+        "tailwindConfig": "libs/camera/tailwind.config.js"
       },
       "configurations": {
         "production": {
@@ -21,17 +24,14 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "tsConfig": "libs/camera/tsconfig.spec.json",
-        "polyfills": ["zone.js", "zone.js/testing"]
+        "jestConfig": "libs/camera/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": ["libs/camera/**/*.ts", "libs/camera/**/*.html"]
-      }
+      "executor": "@nx/eslint:lint"
     }
   }
 }

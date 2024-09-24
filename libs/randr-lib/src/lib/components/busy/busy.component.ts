@@ -10,7 +10,7 @@ import { BusyService } from '../../services/busy.service';
   imports: [ProgressBarModule],
 })
 export class BusyComponent implements OnInit {
-  mode: string = 'determinate';
+  mode = 'determinate';
   value = 100;
 
   constructor(private busy: BusyService) {}

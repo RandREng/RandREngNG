@@ -1,18 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Directive,
   ElementRef,
-  EventEmitter,
   forwardRef,
   HostListener,
-  Output,
   Renderer2,
 } from '@angular/core';
 import {
   DefaultValueAccessor,
-  NgControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { Event } from '@angular/router';
 
 const UPPERCASE_INPUT_CONTROL_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

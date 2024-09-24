@@ -1,15 +1,14 @@
 import { IKeyCollection } from '../interfaces/key-collection.interface';
 
 export default class Dictionary<TKey extends keyof TValue, TValue>
-  implements IKeyCollection<TKey, TValue>
-{
+  implements IKeyCollection<TKey, TValue> {
   private items!: {
     [index in TKey]: TValue;
   };
-  private count: number = 0;
+  private count = 0;
 
   add(key: TKey, value: TValue) {
-    if (!this.items.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(this.items, key)) {
       this.count++;
     }
 
@@ -17,7 +16,7 @@ export default class Dictionary<TKey extends keyof TValue, TValue>
   }
 
   containsKey(key: TKey): boolean {
-    return this.items.hasOwnProperty(key);
+    return Object.prototype.hasOwnProperty.call(this.items, key);
   }
 
   size(): number {
@@ -29,7 +28,7 @@ export default class Dictionary<TKey extends keyof TValue, TValue>
   }
 
   removeItem(key: TKey): TValue {
-    let value = this.items[key];
+    const value = this.items[key];
 
     delete this.items[key];
     this.count--;
@@ -38,10 +37,10 @@ export default class Dictionary<TKey extends keyof TValue, TValue>
   }
 
   getKeys(): TKey[] {
-    let keySet: TKey[] = [];
+    const keySet: TKey[] = [];
 
-    for (let property in this.items) {
-      if (this.items.hasOwnProperty(property)) {
+    for (const property in this.items) {
+      if (Object.prototype.hasOwnProperty.call(this.items, property)) {
         keySet.push(property);
       }
     }
@@ -50,10 +49,10 @@ export default class Dictionary<TKey extends keyof TValue, TValue>
   }
 
   values(): TValue[] {
-    let values: TValue[] = [];
+    const values: TValue[] = [];
 
-    for (let property in this.items) {
-      if (this.items.hasOwnProperty(property)) {
+    for (const property in this.items) {
+      if (Object.prototype.hasOwnProperty.call(this.items, property)) {
         values.push(this.items[property]);
       }
     }

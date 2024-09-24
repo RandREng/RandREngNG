@@ -22,7 +22,6 @@ export class AlertComponent {
     private messageService: MessageService
   ) {
     this.alertService.Alerts.pipe(takeUntilDestroyed()).subscribe((alert) => {
-      console.log(alert);
       this.alerts.push(alert);
       this.messageService.add({
         severity: alert.type == 'danger' ? 'error' : alert.type,

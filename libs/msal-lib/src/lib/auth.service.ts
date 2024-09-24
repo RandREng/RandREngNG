@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import {
   MsalBroadcastService,
@@ -14,13 +14,11 @@ import {
   EventType,
   InteractionStatus,
   InteractionType,
-  Logger,
-  LogLevel,
   PopupRequest,
   RedirectRequest,
 } from '@azure/msal-browser';
 
-import { AlertService } from 'randr-lib';
+import { AlertService } from '@ngIM/randr-lib';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface Account extends AccountInfo {
@@ -43,16 +41,17 @@ export class AuthService {
     private msalService: MsalService,
     private alertService: AlertService
   ) {
-    this.msalService.setLogger(
-      new Logger({
-        loggerCallback: (logLevel, message, piiEnabled) => {
-          //                this.alertService.AddInfoMessage(`MSAL Logging: ${message}`);
-          console.log(`MSAL Logging: ${message}`);
-        },
-        piiLoggingEnabled: false,
-        logLevel: LogLevel.Warning,
-      })
-    );
+    // this.msalService.setLogger(
+    //   new Logger({
+    //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //     loggerCallback: (logLevel, message, _piiEnabled) => {
+    //       //                this.alertService.AddInfoMessage(`MSAL Logging: ${message}`);
+    //       console.log(`MSAL Logging: ${message}`);
+    //     },
+    //     piiLoggingEnabled: false,
+    //     logLevel: LogLevel.Warning,
+    //   })
+    // );
     this.init();
   }
 
@@ -193,7 +192,7 @@ export class AuthService {
   }
 
   inRole(role: string): boolean {
-    let account: Account | null = this.msalService.instance.getActiveAccount();
+    const account: Account | null = this.msalService.instance.getActiveAccount();
     if (!account) {
       return false;
     }

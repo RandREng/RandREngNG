@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { BusyComponent } from './busy.component';
 
 describe('BusyComponent', () => {

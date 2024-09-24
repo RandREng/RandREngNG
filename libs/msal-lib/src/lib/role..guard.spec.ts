@@ -1,14 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  MSAL_GUARD_CONFIG,
-  MSAL_INSTANCE,
-  MsalBroadcastService,
-  MsalGuard,
-  MsalService,
-} from '@azure/msal-angular';
-import { TestInstanceFactory, TestGuardConfigFactory } from './test.factories';
+import { MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalBroadcastService, MsalGuard, MsalService } from '@azure/msal-angular';
 
+import { TestGuardConfigFactory, TestInstanceFactory } from './test.factories';
 import { RoleGuard } from './role.guard';
 
 describe('RoleGuard', () => {
@@ -28,7 +22,7 @@ describe('RoleGuard', () => {
           provide: MSAL_GUARD_CONFIG,
           useFactory: TestGuardConfigFactory,
         },
-      ],
+      ]
     });
     guard = TestBed.inject(RoleGuard);
   });

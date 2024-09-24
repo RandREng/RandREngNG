@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,8 +7,6 @@ import { Subject, ReplaySubject } from 'rxjs';
 export class BusyService {
   public Busy = new ReplaySubject<boolean>(12);
   count = 0;
-
-  constructor() {}
 
   public AddBusy() {
     this.count++;

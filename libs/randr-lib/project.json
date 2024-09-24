@@ -1,38 +1,37 @@
 {
   "name": "randr-lib",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
   "sourceRoot": "libs/randr-lib/src",
   "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "tsConfig": "libs/randr-lib/tsconfig.lib.json",
-        "project": "libs/randr-lib/ng-package.json"
+        "project": "libs/randr-lib/ng-package.json",
+        "tailwindConfig": "libs/randr-lib/tailwind.config.js"
       },
       "configurations": {
         "production": {
           "tsConfig": "libs/randr-lib/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/randr-lib/tsconfig.lib.json"
         }
-      }
+      },
+      "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "main": "libs/randr-lib/src/test.ts",
-        "tsConfig": "libs/randr-lib/tsconfig.spec.json",
-        "karmaConfig": "libs/randr-lib/karma.conf.js"
+        "jestConfig": "libs/randr-lib/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/randr-lib/**/*.ts",
-          "libs/randr-lib/**/*.html"
-        ]
-      }
+      "executor": "@nx/eslint:lint"
     }
   }
 }

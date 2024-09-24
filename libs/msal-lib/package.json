@@ -1,15 +1,15 @@
 {
-  "name": "msal-lib",
+  "name": "@ngIM/msal-lib",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/animations": "~13.3.0",
-    "@angular/cdk": "^13.3.0",
-    "@angular/common": "^13.3.0",
-    "@angular/core": "^13.3.0",
-    "@angular/material": "^13.3.0",
-    "@azure/msal-angular": "^2.1.2"
+    "@angular/core": "^18.2.0",
+    "@angular/router": "~18.2.0",
+    "rxjs": "~7.8.0",
+    "@azure/msal-angular": "^3.0.23",
+    "@azure/msal-browser": "^3.23.0",
+    "@ngIM/randr-lib": "0.0.1",
+    "primeng": "^17.18.10",
+    "@nx/angular": "19.7.4"
   },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  }
+  "sideEffects": false
 }

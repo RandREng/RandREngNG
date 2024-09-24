@@ -1,7 +1,3 @@
-/*
- * Public API Surface of camera
- */
-
 export * from './lib/camera.component';
 
 export * from './lib/camera-image';

@@ -10,7 +10,7 @@ export class CameraImage {
   }
 
   private readonly _mimeType: string;
-  private _imageAsBase64: string = '';
+  private _imageAsBase64 = '';
   private readonly _imageAsDataUrl: string;
   private readonly _imageData: ImageData | undefined;
 

@@ -13,8 +13,6 @@ export interface alertItem {
 export class AlertService {
   public Alerts = new Subject<alertItem>();
 
-  constructor() {}
-
   AddMessage(message: string, level: AlertLevel) {
     let type: string;
 
@@ -35,7 +33,7 @@ export class AlertService {
         type = 'primary';
         break;
     }
-    let alert: alertItem = {
+    const alert: alertItem = {
       type: type,
       message: `${new Date()} - ${message}`,
     };

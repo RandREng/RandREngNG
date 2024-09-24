@@ -8,29 +8,16 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { MsalService } from '@azure/msal-angular';
-import { AccountInfo } from '@azure/msal-browser';
-
-import { AlertService } from 'randr-lib';
-
 import { AuthService } from './auth.service';
-
-interface Account extends AccountInfo {
-  idTokenClaims?: {
-    roles?: string[];
-  };
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -40,10 +27,8 @@ export class RoleGuard {
     return this.authService.hasCommonRole(expectedRoles);
   }
 
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canActivateChild(childRoute: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -53,10 +38,8 @@ export class RoleGuard {
     return this.authService.hasCommonRole(expectedRoles);
   }
 
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canLoad(route: Route, _segments: UrlSegment[]):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean

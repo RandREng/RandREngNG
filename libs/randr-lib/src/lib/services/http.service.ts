@@ -10,9 +10,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { AlertService } from './alert.service';
 import { BusyService } from './busy.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class HttpService {
   readonly httpOptions = {
     headers: new HttpHeaders({
@@ -20,9 +18,9 @@ export class HttpService {
     }),
   };
 
-  httpClient: HttpClient | null;
-  alertService: AlertService | null;
-  busyService: BusyService | null;
+  httpClient: HttpClient;
+  alertService: AlertService;
+  busyService: BusyService;
 
   constructor() {
     this.httpClient = inject(HttpClient);
@@ -31,38 +29,38 @@ export class HttpService {
   }
 
   protected _get<T>(requestUrl: string): Observable<T> {
-    this.busyService!.AddBusy();
+    this.busyService.AddBusy();
 
-    return this.httpClient!.get<T>(requestUrl).pipe(
+    return this.httpClient?.get<T>(requestUrl).pipe(
       catchError((err) => this.handleError(err)),
-      finalize(() => this.busyService!.RemoveBusy())
+      finalize(() => this.busyService.RemoveBusy())
     );
   }
 
   protected _put<T, U>(requestUrl: string, item: U): Observable<T> {
     this.busyService?.AddBusy();
 
-    return this.httpClient!.put<T>(requestUrl, item, this.httpOptions).pipe(
+    return this.httpClient.put<T>(requestUrl, item, this.httpOptions).pipe(
       catchError((err) => this.handleError(err)),
-      finalize(() => this.busyService!.RemoveBusy())
+      finalize(() => this.busyService.RemoveBusy())
     );
   }
 
   protected _post<T, U>(requestUrl: string, item: U): Observable<T> {
-    this.busyService!.AddBusy();
+    this.busyService.AddBusy();
 
-    return this.httpClient!.post<T>(requestUrl, item, this.httpOptions).pipe(
+    return this.httpClient.post<T>(requestUrl, item, this.httpOptions).pipe(
       catchError((err) => this.handleError(err)),
-      finalize(() => this.busyService!.RemoveBusy())
+      finalize(() => this.busyService.RemoveBusy())
     );
   }
 
-  protected _delete<T>(requestUrl: string): Observable<any> {
-    this.busyService!.AddBusy();
+  protected _delete(requestUrl: string): Observable<object> {
+    this.busyService.AddBusy();
 
-    return this.httpClient!.delete(requestUrl).pipe(
+    return this.httpClient.delete(requestUrl).pipe(
       catchError((err) => this.handleError(err)),
-      finalize(() => this.busyService!.RemoveBusy())
+      finalize(() => this.busyService.RemoveBusy())
     );
   }
 
@@ -70,13 +68,13 @@ export class HttpService {
     //    this.busyService.RemoveBusy();
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      this.alertService!.AddErrorMessage(
+      this.alertService.AddErrorMessage(
         `An error occurred:, ${error.error.message}`
       );
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      this.alertService!.AddErrorMessage(
+      this.alertService.AddErrorMessage(
         `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
     }
@@ -89,14 +87,14 @@ export class HttpService {
   public _upload(url: string, files: File[]): Observable<HttpEvent<string[]>> {
     const formData = new FormData();
 
-    let index: number = 0;
+    let index = 0;
 
     while (index < files.length) {
       formData.append('files', files[index], files[index].name);
       index++;
     }
 
-    return this.httpClient!.post<string[]>(url, formData, {
+    return this.httpClient.post<string[]>(url, formData, {
       reportProgress: true,
       observe: 'events',
     });

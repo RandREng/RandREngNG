@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/randr-lib",
+  "dest": "../../dist/libs/randr-lib",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/index.ts"
   }
 }

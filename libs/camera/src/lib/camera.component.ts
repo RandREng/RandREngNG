@@ -276,7 +276,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     console.log('takeSnapshot');
     // set canvas size to actual video size
     const track = this.getActiveVideoTrack();
-    const capabilities = track?.getCapabilities();
+    const _capabilities = track?.getCapabilities();
     const _video = this.nativeVideoElement;
     const dimensions = { width: this.width, height: this.height };
     if (_video?.videoWidth) {

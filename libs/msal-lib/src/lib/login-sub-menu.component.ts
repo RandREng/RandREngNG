@@ -49,7 +49,6 @@ export class LoginSubMenuComponent {
   public authenticated = false;
 
   loginDisplay = false;
-  dataSource: any = [];
 
   //  private subscription: Subscription;
   public userName = '';
