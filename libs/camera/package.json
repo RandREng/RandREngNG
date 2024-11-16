@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/core": "^18.2.0",
-    "@nx/angular": "19.8.0",
-    "rxjs": "~7.8.0"
+    "@nx/angular": "20.0.8",
+    "rxjs": "~7.8.0",
+    "tailwindcss-primeui": "^0.3.4"
   },
   "sideEffects": false
 }
