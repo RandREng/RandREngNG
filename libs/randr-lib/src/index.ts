@@ -10,6 +10,9 @@ export * from './lib/classes/dictionary';
 export * from './lib/components/alert/alert.component';
 export * from './lib/components/busy/busy.component';
 export * from './lib/components/display-data/display-data.component';
+export * from './lib/components/error/error.component';
+export * from './lib/components/loading/loading.component';
+export * from './lib/components/page/page.component';
 
 export * from './lib/directives/uppercase-input.directive';
 export * from './lib/directives/uppercase-textarea.directive';

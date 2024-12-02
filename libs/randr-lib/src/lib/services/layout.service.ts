@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 //import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { ReplaySubject } from 'rxjs';
 
@@ -6,6 +6,18 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class LayoutService {
+  private pageTitle = signal<string>('');
+
+  setPageTitle(title: string) {
+    this.pageTitle.set(title);
+    // Optionally, you can also update the document title
+    document.title = title;
+  }
+
+  getPageTitle() {
+    return this.pageTitle();
+  }
+
   public LayoutChange$ = new ReplaySubject<boolean>();
 
   activeBreakpoints: string[] = [];

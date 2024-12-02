@@ -1,0 +1,10 @@
+<p-card class="w-48">
+  <ng-template pTemplate="header">
+    <span class="material-icons">error</span>
+  </ng-template>
+  <ng-template pTemplate="title">Error</ng-template>
+  <ng-template pTemplate="subtitle">{{ errorMessage() }}</ng-template>
+  <ng-template pTemplate="footer">
+    <button p-button color="primary" (click)="retry.emit()">RETRY</button>
+  </ng-template>
+</p-card>

@@ -2,7 +2,7 @@
   "name": "randr-lib",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/randr-lib/src",
-  "prefix": "lib",
+  "prefix": "lib-randr",
   "projectType": "library",
   "tags": [],
   "targets": {

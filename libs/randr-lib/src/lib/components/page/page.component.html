@@ -1,0 +1,16 @@
+@if (error()) {
+  <ng-container *ngTemplateOutlet="errorTemplate || defaultErrorTemplate; context: {$implicit: error()}"></ng-container>
+} @else if (isLoading()) {
+  <ng-container *ngTemplateOutlet="loadingTemplate || defaultLoadingTemplate"></ng-container>
+} @else {
+  <ng-content></ng-content>
+}
+
+<!-- Default templates -->
+<ng-template #defaultErrorTemplate let-error>
+  <lib-randr-error [errorMessage]="error?.message"></lib-randr-error>
+</ng-template>
+
+<ng-template #defaultLoadingTemplate>
+  <lib-randr-loading></lib-randr-loading>
+</ng-template>
