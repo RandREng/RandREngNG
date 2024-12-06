@@ -6,11 +6,10 @@ import { LoadingComponent } from '../loading/loading.component';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'lib-randr-page',
-  standalone: true,
-  imports: [CommonModule, ErrorComponent, LoadingComponent],
-  templateUrl: './page.component.html',
-  styleUrl: './page.component.scss',
+    selector: 'lib-randr-page',
+    imports: [CommonModule, ErrorComponent, LoadingComponent],
+    templateUrl: './page.component.html',
+    styleUrl: './page.component.scss'
 })
 export class PageComponent {
   @ContentChild('loadingTemplate', { static: false }) loadingTemplate?: TemplateRef<unknown>;

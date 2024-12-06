@@ -10,8 +10,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/randr-lib/ng-package.json",
-        "tailwindConfig": "libs/randr-lib/tailwind.config.js"
+        "project": "libs/randr-lib/ng-package.json"
       },
       "configurations": {
         "production": {

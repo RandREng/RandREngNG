@@ -10,8 +10,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/msal-lib/ng-package.json",
-        "tailwindConfig": "libs/msal-lib/tailwind.config.js"
+        "project": "libs/msal-lib/ng-package.json"
       },
       "configurations": {
         "production": {

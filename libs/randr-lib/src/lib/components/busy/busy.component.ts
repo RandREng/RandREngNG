@@ -3,11 +3,10 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { BusyService } from '../../services/busy.service';
 
 @Component({
-  selector: 'lib-randr-busy',
-  templateUrl: './busy.component.html',
-  styleUrls: ['./busy.component.scss'],
-  standalone: true,
-  imports: [ProgressBarModule],
+    selector: 'lib-randr-busy',
+    templateUrl: './busy.component.html',
+    styleUrls: ['./busy.component.scss'],
+    imports: [ProgressBarModule]
 })
 export class BusyComponent implements OnInit {
   mode = 'determinate';

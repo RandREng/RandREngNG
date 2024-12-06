@@ -10,8 +10,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/camera/ng-package.json",
-        "tailwindConfig": "libs/camera/tailwind.config.js"
+        "project": "libs/camera/ng-package.json"
       },
       "configurations": {
         "production": {

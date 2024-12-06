@@ -16,11 +16,10 @@ import { CameraMirrorProperties } from './camera-mirror-properties';
 import { CameraUtility } from './camera-utility';
 
 @Component({
-  selector: 'lib-camera',
-  templateUrl: 'camera.component.html',
-  styleUrls: ['camera.component.scss'],
-  standalone: true,
-  imports: [],
+    selector: 'lib-camera',
+    templateUrl: 'camera.component.html',
+    styleUrls: ['camera.component.scss'],
+    imports: []
 })
 export class CameraComponent implements AfterViewInit, OnDestroy {
   private static DEFAULT_VIDEO_OPTIONS: MediaTrackConstraints = {

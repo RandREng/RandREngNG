@@ -7,12 +7,11 @@ import { ToastModule } from 'primeng/toast';
 import { AlertService, alertItem } from '../../services/alert.service';
 
 @Component({
-  selector: 'lib-randr-alert',
-  templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss'],
-  standalone: true,
-  imports: [ToastModule],
-  providers: [MessageService],
+    selector: 'lib-randr-alert',
+    templateUrl: './alert.component.html',
+    styleUrls: ['./alert.component.scss'],
+    imports: [ToastModule],
+    providers: [MessageService]
 })
 export class AlertComponent {
   alerts: alertItem[] = [];

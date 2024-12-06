@@ -10,8 +10,8 @@ import { RippleModule } from 'primeng/ripple';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'lib-msal-sub-menu',
-  template: `
+    selector: 'lib-msal-sub-menu',
+    template: `
     <span>
       @if (authenticated) {
       <p-menu #menu [model]="itemsLogout" [popup]="true">
@@ -39,9 +39,8 @@ import { AuthService } from './auth.service';
       }
     </span>
   `,
-  styles: [],
-  standalone: true,
-  imports: [BadgeModule, ButtonModule, MenuModule, RippleModule],
+    styles: [],
+    imports: [BadgeModule, ButtonModule, MenuModule, RippleModule]
 })
 export class LoginSubMenuComponent {
   public isActive = true;
