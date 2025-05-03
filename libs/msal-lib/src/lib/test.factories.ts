@@ -42,7 +42,7 @@ import { BrowserCacheLocation, InteractionType, IPublicClientApplication, LogLev
 
 
 export function loggerCallback(_logLevel: LogLevel, _message: string) {
-//  console.log(message);
+  //  console.log(message);
 }
 
 export function TestInstanceFactory(): IPublicClientApplication {
@@ -57,7 +57,7 @@ export function TestInstanceFactory(): IPublicClientApplication {
       cacheLocation: BrowserCacheLocation.LocalStorage,
     },
     system: {
-      allowNativeBroker: false, // Disables WAM Broker
+      allowPlatformBroker: false, // Disables WAM Broker
       loggerOptions: {
         loggerCallback,
         logLevel: LogLevel.Info,
