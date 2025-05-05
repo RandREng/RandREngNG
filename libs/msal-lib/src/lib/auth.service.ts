@@ -32,6 +32,7 @@ interface Account extends AccountInfo {
 })
 export class AuthService {
   public Authenticated$ = new ReplaySubject<boolean>();
+  public initialized = false
 
   constructor(
     //    private router: Router,
@@ -52,11 +53,11 @@ export class AuthService {
     //     logLevel: LogLevel.Warning,
     //   })
     // );
-    this.init();
-  }
+    this.msalService.initialize().subscribe(() => {
+      this.initialized = true;
+    }),
 
-  private init(): void {
-    this.msalService.handleRedirectObservable().subscribe();
+      this.msalService.handleRedirectObservable().subscribe();
 
     this.broadcastService.msalSubject$
       .pipe(
@@ -88,9 +89,15 @@ export class AuthService {
         this.checkAndSetActiveAccount();
         //          this.getClaims(this.authService.instance.getActiveAccount()?.idTokenClaims)
       });
+
+    //    });
+  }
+
+  private init(): void {
   }
 
   checkAndSetActiveAccount(): void {
+    console.log("checkAndSetActiveAccount");
     /**
      * If no active account set but there are accounts signed in, sets first account to active account
      * To use active account set here, subscribe to inProgress$ first in your component
@@ -111,14 +118,17 @@ export class AuthService {
   }
 
   get userName(): string | undefined {
+    console.log("get UserName");
     return this.msalService.instance.getActiveAccount()?.name;
   }
 
   getClaims() {
+    console.log("getClaims")
     return this.msalService.instance.getActiveAccount()?.idTokenClaims;
   }
 
   login(): void {
+    console.log("login");
     //        const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
     //        if (isIE) {
@@ -153,6 +163,7 @@ export class AuthService {
   }
 
   logout(): void {
+    console.log("logout");
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
       this.msalService.logoutPopup({
         mainWindowRedirectUri: '/',
@@ -163,50 +174,65 @@ export class AuthService {
   }
 
   isAuthenticate(): boolean {
-    const account: Account | null =
-      this.msalService.instance.getActiveAccount();
-    if (!account) {
+    console.log("isAuthenticate");
+    if (this.initialized) {
+      const account: Account | null =
+        this.msalService.instance.getActiveAccount();
+      if (!account) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    else {
       return false;
-    } else {
-      return true;
     }
   }
+
   hasCommonRole(roles: string[]): boolean {
-    const account: Account | null =
-      this.msalService.instance.getActiveAccount();
-    if (!account) {
-      return false;
-    }
+    console.log("hasCommonRole");
+    if (this.initialized) {
+      const account: Account | null =
+        this.msalService.instance.getActiveAccount();
+      if (!account) {
+        return false;
+      }
 
-    if (!account?.idTokenClaims?.roles) {
-      this.alertService.AddDebugMessage(
-        'Token does not have roles claim. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.'
-      );
-      return false;
-    } else if (!account?.idTokenClaims.roles.filter((x) => roles.includes(x))) {
-      //        this.alertService.AddDebugMessage('You do not have access as expected role is missing. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.');
-      return false;
-    }
+      if (!account?.idTokenClaims?.roles) {
+        this.alertService.AddDebugMessage(
+          'Token does not have roles claim. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.'
+        );
+        return false;
+      } else if (!account?.idTokenClaims.roles.filter((x) => roles.includes(x))) {
+        //        this.alertService.AddDebugMessage('You do not have access as expected role is missing. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.');
+        return false;
+      }
 
-    return true;
+      return true;
+    }
+    return false;
   }
 
   inRole(role: string): boolean {
-    const account: Account | null = this.msalService.instance.getActiveAccount();
-    if (!account) {
-      return false;
-    }
+    console.log("inRole");
+    if (this.initialized) {
+      const account: Account | null = this.msalService.instance.getActiveAccount();
+      if (!account) {
+        return false;
+      }
 
-    if (!account?.idTokenClaims?.roles) {
-      this.alertService.AddDebugMessage(
-        'Token does not have roles claim. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.'
-      );
-      return false;
-    } else if (!account.idTokenClaims.roles.includes(role)) {
-      //        this.alertService.AddDebugMessage('You do not have access as expected role is missing. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.');
-      return false;
-    }
+      if (!account?.idTokenClaims?.roles) {
+        this.alertService.AddDebugMessage(
+          'Token does not have roles claim. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.'
+        );
+        return false;
+      } else if (!account.idTokenClaims.roles.includes(role)) {
+        //        this.alertService.AddDebugMessage('You do not have access as expected role is missing. Please ensure that your account is assigned to an app role and then sign-out and sign-in again.');
+        return false;
+      }
 
-    return true;
+      return true;
+    }
+    return false;
   }
 }
