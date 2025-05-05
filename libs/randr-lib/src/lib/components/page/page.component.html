@@ -1,8 +1,8 @@
 <!-- Default templates -->
 @if (error()){
-<lib-randr-error [errorMessage]="error()!.message"></lib-randr-error>
+<randr-error [errorMessage]="error()!.message"></randr-error>
 } @else if (isLoading()) {
-<lib-randr-loading></lib-randr-loading>
+<randr-loading></randr-loading>
 } @else {
 <ng-content></ng-content>
 }

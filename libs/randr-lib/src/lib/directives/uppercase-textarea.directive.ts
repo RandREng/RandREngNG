@@ -17,7 +17,7 @@ const UPPERCASE_TEXTAREA_CONTROL_VALUE_ACCESSOR = {
   multi: true,
 };
 @Directive({
-  selector: 'textarea[libUppercase]',
+  selector: 'textarea[randrUppercase]',
   providers: [UPPERCASE_TEXTAREA_CONTROL_VALUE_ACCESSOR],
   standalone: true,
 })

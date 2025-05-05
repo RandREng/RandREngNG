@@ -16,10 +16,10 @@ import { CameraMirrorProperties } from './camera-mirror-properties';
 import { CameraUtility } from './camera-utility';
 
 @Component({
-    selector: 'lib-camera',
-    templateUrl: 'camera.component.html',
-    styleUrls: ['camera.component.scss'],
-    imports: []
+  selector: 'camera-component',
+  templateUrl: 'camera.component.html',
+  styleUrls: ['camera.component.scss'],
+  imports: []
 })
 export class CameraComponent implements AfterViewInit, OnDestroy {
   private static DEFAULT_VIDEO_OPTIONS: MediaTrackConstraints = {
@@ -440,9 +440,9 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
               .then(() => {
                 this.activeVideoInputIndex = activeDeviceId
                   ? this.availableVideoInputs.findIndex(
-                      (mediaDeviceInfo: MediaDeviceInfo) =>
-                        mediaDeviceInfo.deviceId === activeDeviceId
-                    )
+                    (mediaDeviceInfo: MediaDeviceInfo) =>
+                      mediaDeviceInfo.deviceId === activeDeviceId
+                  )
                   : -1;
                 this.videoInitialized = true;
               })

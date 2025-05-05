@@ -17,7 +17,7 @@ const UPPERCASE_INPUT_CONTROL_VALUE_ACCESSOR = {
   multi: true,
 };
 @Directive({
-  selector: 'input[libUppercase]',
+  selector: 'input[randrUppercase]',
   providers: [UPPERCASE_INPUT_CONTROL_VALUE_ACCESSOR],
   standalone: true,
 })

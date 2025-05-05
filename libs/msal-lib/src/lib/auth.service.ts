@@ -55,9 +55,9 @@ export class AuthService {
     // );
     this.msalService.initialize().subscribe(() => {
       this.initialized = true;
-    }),
+    });
 
-      this.msalService.handleRedirectObservable().subscribe();
+    this.msalService.handleRedirectObservable().subscribe();
 
     this.broadcastService.msalSubject$
       .pipe(
@@ -91,10 +91,7 @@ export class AuthService {
       });
 
     //    });
-  }
-
-  private init(): void {
-  }
+  };
 
   checkAndSetActiveAccount(): void {
     console.log("checkAndSetActiveAccount");

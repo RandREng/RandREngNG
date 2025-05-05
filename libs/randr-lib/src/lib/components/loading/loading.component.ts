@@ -4,10 +4,10 @@ import { CommonModule } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
-    selector: 'lib-randr-loading',
-    imports: [CommonModule, ProgressSpinnerModule],
-    templateUrl: './loading.component.html',
-    styleUrl: './loading.component.scss'
+  selector: 'randr-loading',
+  imports: [CommonModule, ProgressSpinnerModule],
+  templateUrl: './loading.component.html',
+  styleUrl: './loading.component.scss'
 })
 export class LoadingComponent {
   message = input<string>('Loading...');
