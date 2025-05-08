@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, signal } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import {
@@ -31,7 +31,7 @@ interface Account extends AccountInfo {
   providedIn: 'root',
 })
 export class AuthService {
-  public Authenticated$ = new ReplaySubject<boolean>();
+  public Authenticated = signal<boolean>(false)
   public initialized = false
 
   constructor(
@@ -42,17 +42,6 @@ export class AuthService {
     private msalService: MsalService,
     private alertService: AlertService
   ) {
-    // this.msalService.setLogger(
-    //   new Logger({
-    //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //     loggerCallback: (logLevel, message, _piiEnabled) => {
-    //       //                this.alertService.AddInfoMessage(`MSAL Logging: ${message}`);
-    //       console.log(`MSAL Logging: ${message}`);
-    //     },
-    //     piiLoggingEnabled: false,
-    //     logLevel: LogLevel.Warning,
-    //   })
-    // );
     this.msalService.initialize().subscribe(() => {
       this.initialized = true;
     });
@@ -74,9 +63,9 @@ export class AuthService {
           const payload = result.payload as AuthenticationResult;
           this.msalService.instance.setActiveAccount(payload.account);
           //                    this.msalService.instance.getActiveAccount().idTokenClaims.
-          this.Authenticated$.next(true);
+          this.Authenticated.set(true);
         } else if (result.eventType === EventType.LOGOUT_SUCCESS) {
-          this.Authenticated$.next(false);
+          this.Authenticated.set(false);
         }
       });
 
@@ -94,7 +83,6 @@ export class AuthService {
   };
 
   checkAndSetActiveAccount(): void {
-    console.log("checkAndSetActiveAccount");
     /**
      * If no active account set but there are accounts signed in, sets first account to active account
      * To use active account set here, subscribe to inProgress$ first in your component
@@ -108,24 +96,21 @@ export class AuthService {
     ) {
       const accounts = this.msalService.instance.getAllAccounts();
       this.msalService.instance.setActiveAccount(accounts[0]);
-      this.Authenticated$.next(true);
+      this.Authenticated.set(true);
     } else if (activeAccount) {
-      this.Authenticated$.next(true);
+      this.Authenticated.set(true);
     }
   }
 
   get userName(): string | undefined {
-    console.log("get UserName");
     return this.msalService.instance.getActiveAccount()?.name;
   }
 
   getClaims() {
-    console.log("getClaims")
     return this.msalService.instance.getActiveAccount()?.idTokenClaims;
   }
 
   login(): void {
-    console.log("login");
     //        const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
     //        if (isIE) {
@@ -160,7 +145,6 @@ export class AuthService {
   }
 
   logout(): void {
-    console.log("logout");
     if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
       this.msalService.logoutPopup({
         mainWindowRedirectUri: '/',
@@ -171,7 +155,6 @@ export class AuthService {
   }
 
   isAuthenticate(): boolean {
-    console.log("isAuthenticate");
     if (this.initialized) {
       const account: Account | null =
         this.msalService.instance.getActiveAccount();
@@ -187,7 +170,6 @@ export class AuthService {
   }
 
   hasCommonRole(roles: string[]): boolean {
-    console.log("hasCommonRole");
     if (this.initialized) {
       const account: Account | null =
         this.msalService.instance.getActiveAccount();
@@ -211,7 +193,6 @@ export class AuthService {
   }
 
   inRole(role: string): boolean {
-    console.log("inRole");
     if (this.initialized) {
       const account: Account | null = this.msalService.instance.getActiveAccount();
       if (!account) {

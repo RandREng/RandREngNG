@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { MenuItem } from 'primeng/api';
@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
   selector: 'msal-sub-menu',
   template: `
     <span>
-      @if (authenticated) {
+      @if (authenticated()) {
       <p-menu #menu [model]="itemsLogout" [popup]="true">
         <ng-template pTemplate="item" let-item>
           <a pRipple class="flex items-center p-menuitem-link">
@@ -33,7 +33,7 @@ import { AuthService } from './auth.service';
           <ng-content></ng-content>
         </ng-template>
       </p-menu>
-      <p-button (click)="menu.toggle($event)">{{ userName }}</p-button>
+      <p-button (click)="menu.toggle($event)">{{ this.authService.userName }}</p-button>
       } @else {
       <p-menu #menu [model]="itemsLogin" />
       }
@@ -45,12 +45,13 @@ import { AuthService } from './auth.service';
 export class LoginSubMenuComponent {
   public isActive = true;
   public isAdmin = false;
-  public authenticated = false;
+  authService = inject(AuthService);
+  public authenticated = this.authService.Authenticated
 
   loginDisplay = false;
 
   //  private subscription: Subscription;
-  public userName = '';
+  public user = '';
   badge = 0;
 
   itemsLogout: MenuItem[] = [
@@ -72,21 +73,6 @@ export class LoginSubMenuComponent {
       },
     },
   ];
-
-  constructor(
-    //    private router: Router,
-    private authService: AuthService
-  ) {
-    this.authService.Authenticated$.pipe(takeUntilDestroyed()).subscribe(
-      (result) => {
-        this.authenticated = result;
-        this.userName =
-          this.authService.userName != undefined
-            ? this.authService.userName
-            : '';
-      }
-    );
-  }
 
   login() {
     this.authService.login();
