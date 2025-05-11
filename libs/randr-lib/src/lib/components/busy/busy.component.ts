@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { BusyService } from '../../services/busy.service';
 
@@ -8,15 +8,11 @@ import { BusyService } from '../../services/busy.service';
   styleUrls: ['./busy.component.scss'],
   imports: [ProgressBarModule]
 })
-export class BusyComponent implements OnInit {
-  mode = 'determinate';
+export class BusyComponent {
   value = 100;
 
-  constructor(private busy: BusyService) { }
+  busyService = inject(BusyService);
+  busy = this.busyService.Busy
+  mode = computed<string>(() => (this.busy() ? 'indeterminate' : 'determinate'));
 
-  ngOnInit(): void {
-    this.busy.Busy.subscribe((value) => {
-      this.mode = value ? 'indeterminate' : 'determinate';
-    });
-  }
 }

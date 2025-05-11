@@ -1,24 +1,19 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BusyService {
-  public Busy = new ReplaySubject<boolean>(12);
-  count = 0;
+  public Busy = computed<boolean>(() => (this.count() > 0));
+
+  private count = signal(0);
 
   public AddBusy() {
-    this.count++;
-    if (this.count == 1) {
-      this.Busy.next(true);
-    }
+    this.count.update(value => value + 1);
   }
 
   public RemoveBusy() {
-    this.count--;
-    if (this.count == 0) {
-      this.Busy.next(false);
-    }
+    this.count.update(value => value - 1);
   }
 }
