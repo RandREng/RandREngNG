@@ -1,25 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Directive,
-  ElementRef,
-  forwardRef,
-  HostListener,
-  Renderer2,
-} from '@angular/core';
-import {
-  DefaultValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Directive, ElementRef, forwardRef, Renderer2 } from '@angular/core';
+import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-const UPPERCASE_TEXTAREA_CONTROL_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => UppercaseTextareaDirective),
-  multi: true,
-};
 @Directive({
   selector: 'textarea[randrUppercase]',
-  providers: [UPPERCASE_TEXTAREA_CONTROL_VALUE_ACCESSOR],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => UppercaseTextareaDirective),
+      multi: true,
+    }
+  ],
   standalone: true,
+  host: {
+    '(input)': 'onInput($event)',
+  }
 })
 export class UppercaseTextareaDirective extends DefaultValueAccessor {
   constructor(renderer: Renderer2, elementRef: ElementRef) {
@@ -32,12 +27,15 @@ export class UppercaseTextareaDirective extends DefaultValueAccessor {
     super.writeValue(transformed);
   }
 
-  @HostListener('input', ['$event.target.value'])
-  onInput(value: any): void {
-    const transformed = this.transformValue(value);
 
-    super.writeValue(transformed);
-    this.onChange(transformed);
+  onInput(event: InputEvent): void {
+    const input = event.target as HTMLTextAreaElement;
+    if (input) {
+      const transformed = this.transformValue(input.value);
+
+      super.writeValue(transformed);
+      this.onChange(transformed);
+    }
   }
 
   private transformValue(value: any): any {

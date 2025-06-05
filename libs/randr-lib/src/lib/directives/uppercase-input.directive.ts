@@ -1,25 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Directive,
-  ElementRef,
-  forwardRef,
-  HostListener,
-  Renderer2,
-} from '@angular/core';
-import {
-  DefaultValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Directive, ElementRef, forwardRef, Renderer2 } from '@angular/core';
+import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-const UPPERCASE_INPUT_CONTROL_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => UppercaseInputDirective),
-  multi: true,
-};
 @Directive({
   selector: 'input[randrUppercase]',
-  providers: [UPPERCASE_INPUT_CONTROL_VALUE_ACCESSOR],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => UppercaseInputDirective),
+      multi: true,
+    }
+  ],
   standalone: true,
+  host: {
+    '(input)': 'onInput($event)'
+  }
 })
 export class UppercaseInputDirective extends DefaultValueAccessor {
   constructor(renderer: Renderer2, elementRef: ElementRef) {
@@ -32,12 +27,14 @@ export class UppercaseInputDirective extends DefaultValueAccessor {
     super.writeValue(transformed);
   }
 
-  @HostListener('input', ['$event.target.value'])
-  onInput = (value: any) => {
-    const transformed = this.transformValue(value);
+  onInput = (event: InputEvent) => {
+    const input = event.target as HTMLInputElement;
+    if (input) {
+      const transformed = this.transformValue(input.value);
 
-    super.writeValue(transformed);
-    this.onChange(transformed);
+      super.writeValue(transformed);
+      this.onChange(transformed);
+    }
   };
 
   private transformValue(value: any): any {
