@@ -3,11 +3,11 @@ import { Directive, ElementRef, forwardRef, Renderer2 } from '@angular/core';
 import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
-  selector: 'input[randrUppercase]',
+  selector: 'input[randrUppercase], textarea[randrUppercase]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UppercaseInputDirective),
+      useExisting: forwardRef(() => UppercaseDirective),
       multi: true,
     }
   ],
@@ -16,7 +16,7 @@ import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     '(input)': 'onInput($event)'
   }
 })
-export class UppercaseInputDirective extends DefaultValueAccessor {
+export class UppercaseDirective extends DefaultValueAccessor {
   constructor(renderer: Renderer2, elementRef: ElementRef) {
     super(renderer, elementRef, false);
   }

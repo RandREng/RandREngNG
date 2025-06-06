@@ -15,7 +15,6 @@ export * from './lib/components/loading/loading.component';
 export * from './lib/components/page/page.component';
 
 export * from './lib/directives/uppercase-input.directive';
-export * from './lib/directives/uppercase-textarea.directive';
 export * from './lib/directives/textarea-autoresize.directive';
 
 export * from './lib/guards/dirty-check.guard';
