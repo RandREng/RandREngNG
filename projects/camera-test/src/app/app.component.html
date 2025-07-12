@@ -1,0 +1,16 @@
+<div class="dialog-container">
+  <div class="dialog-content">
+    <r-Camera [height]=1024 [width]=1024 [allowCameraSwitch]=true (imageCapture)="onCapture($event)" [showResolution]=true (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)" [imageQuality]="1" />
+
+    <!--     <webcam *ngIf="showWebcam"
+            [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+    ></webcam>
+
+ -->
+  </div>
+  <div class="dialog-actions">
+    <button (click)="onClick()">Snap</button>
+    <button (click)="onClose()">Done</button>
+  </div>
+</div>
