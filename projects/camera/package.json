@@ -1,0 +1,19 @@
+{
+  "name": "@RandREng/CameraNG",
+  "version": "0.0.2",
+  "author": {
+    "name": "RandREng",
+    "email": "info@randreng.com"
+  },
+  "publishConfig": {
+    "registry": "https://npm.randreng.com"
+  },
+  "peerDependencies": {
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
