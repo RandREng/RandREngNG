@@ -1,6 +1,6 @@
 import { Component, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CameraComponent, CameraImage, CameraInitError } from "CameraNG";
+import { CameraComponent, CameraImage, CameraInitError } from "Camera";
 
 @Component({
   selector: 'app-root',

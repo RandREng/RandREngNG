@@ -1,24 +1,24 @@
-<div class="camera-wrapper" (click)="imageClick.next()">
+<div class="camera-wrapper" (click)="imageClick.emit()">
   <video
     #video
-    [width]="videoWidth"
-    [height]="videoHeight"
+    [width]="videoWidth()"
+    [height]="videoHeight()"
     [class]="videoStyleClasses"
     autoplay
     muted
     playsinline
     (resize)="videoResize()"
   ></video>
-  @if (allowCameraSwitch && availableVideoInputs.length > 1 && videoInitialized)
+  @if (allowCameraSwitch() && availableVideoInputs.length > 1 && videoInitialized)
   {
   <div class="camera-switch" (click)="rotateVideoInput(true)"></div>
   }
-  <canvas #canvas [width]="width" [height]="height"></canvas>
-  @if (showResolution) {
+  <canvas #canvas [width]="width()" [height]="height()"></canvas>
+  @if (showResolution()) {
   <div class="resolution">
     <p>
-      {{ this.nativeVideoElement?.videoWidth }}x{{
-        this.nativeVideoElement?.videoHeight
+      {{ this.nativeVideoElement()?.videoWidth }}x{{
+        this.nativeVideoElement()?.videoHeight
       }}
     </p>
   </div>

@@ -113,20 +113,20 @@
         }
       }
     },
-    "CameraNG": {
+    "Camera": {
       "projectType": "library",
-      "root": "projects/camera-ng",
-      "sourceRoot": "projects/camera-ng/src",
+      "root": "projects/camera",
+      "sourceRoot": "projects/camera/src",
       "prefix": "r",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/camera-ng/tsconfig.lib.prod.json"
+              "tsConfig": "projects/camera/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/camera-ng/tsconfig.lib.json"
+              "tsConfig": "projects/camera/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -134,10 +134,10 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/camera-ng/tsconfig.spec.json",
+            "tsConfig": "projects/camera/tsconfig.spec.json",
             "runner": "vitest",
             "buildTarget": "::development",
-            "providersFile": "projects/camera-ng/src/test-providers.ts"
+            "providersFile": "projects/camera/src/test-providers.ts"
           }
         }
       }

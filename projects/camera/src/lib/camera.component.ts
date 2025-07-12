@@ -1,13 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, computed, input, output, viewChild } from '@angular/core';
+
 import { Observable, Subscription } from 'rxjs';
 
 import { CameraImage } from './camera-image';
@@ -16,12 +8,12 @@ import { CameraMirrorProperties } from './camera-mirror-properties';
 import { CameraUtility } from './camera-utility';
 
 @Component({
-  selector: 'camera-component',
-  templateUrl: 'camera.component.html',
-  styleUrls: ['camera.component.scss'],
-  imports: []
+  selector: 'r-Camera',
+  imports: [],
+  templateUrl: './camera.component.html',
+  styleUrl: './camera.component.scss'
 })
-export class CameraComponent implements AfterViewInit, OnDestroy {
+export class CameraComponent  implements AfterViewInit, OnDestroy {
   private static DEFAULT_VIDEO_OPTIONS: MediaTrackConstraints = {
     facingMode: 'environment',
   };
@@ -29,36 +21,32 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
   private static DEFAULT_IMAGE_QUALITY = 0.92;
 
   /** Defines the max width of the webcam area in px */
-  @Input() public width = 640;
+  public readonly width = input(640);
   /** Defines the max height of the webcam area in px */
-  @Input() public height = 480;
+  public readonly height = input(480);
   /** Defines base constraints to apply when requesting video track from UserMedia */
-  @Input() public videoOptions: MediaTrackConstraints =
-    CameraComponent.DEFAULT_VIDEO_OPTIONS;
+  public readonly videoOptions = input<MediaTrackConstraints>(CameraComponent.DEFAULT_VIDEO_OPTIONS);
   /** Flag to enable/disable camera switch. If enabled, a switch icon will be displayed if multiple cameras were found */
-  @Input() public allowCameraSwitch = true;
+  public readonly allowCameraSwitch = input(true);
   /** Parameter to control image mirroring (i.e. for user-facing camera). ["auto", "always", "never"] */
-  @Input() public mirrorImage: string | CameraMirrorProperties = 'auto';
+  public readonly mirrorImage = input<string | CameraMirrorProperties>('auto');
   /** Flag to control whether an ImageData object is stored into the WebcamImage object. */
-  @Input() public captureImageData = false;
+  public readonly captureImageData = input(false);
   /** The image type to use when capturing snapshots */
-  @Input() public imageType: string = CameraComponent.DEFAULT_IMAGE_TYPE;
+  public readonly imageType = input<string>(CameraComponent.DEFAULT_IMAGE_TYPE);
   /** The image quality to use when capturing snapshots (number between 0 and 1) */
-  @Input() public imageQuality: number = CameraComponent.DEFAULT_IMAGE_QUALITY;
+  public readonly imageQuality = input<number>(CameraComponent.DEFAULT_IMAGE_QUALITY);
   /** Flag to enable/disable resolution label. */
-  @Input() public showResolution = false;
+  public readonly showResolution = input(false);
 
   /** EventEmitter which fires when an image has been captured */
-  @Output() public imageCapture: EventEmitter<CameraImage> =
-    new EventEmitter<CameraImage>();
+  public readonly imageCapture = output<CameraImage>();
   /** Emits a mediaError if webcam cannot be initialized (e.g. missing user permissions) */
-  @Output() public initError: EventEmitter<CameraInitError> =
-    new EventEmitter<CameraInitError>();
+  public readonly initError = output<CameraInitError>();
   /** Emits when the webcam video was clicked */
-  @Output() public imageClick: EventEmitter<void> = new EventEmitter<void>();
+  public readonly imageClick = output<void>();
   /** Emits the active deviceId after the active video device was switched */
-  @Output() public cameraSwitched: EventEmitter<string> =
-    new EventEmitter<string>();
+  public readonly cameraSwitched = output<string>();
 
   /** available video devices */
   public availableVideoInputs: MediaDeviceInfo[] = [];
@@ -69,36 +57,16 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
   /** If the Observable represented by this subscription emits, an image will be captured and emitted through
    * the 'imageCapture' EventEmitter
    */
-  private triggerSubscription: Subscription | undefined;
   /** Index of active video in availableVideoInputs */
   private activeVideoInputIndex = -1;
-  /** Subscription to switchCamera events */
-  private switchCameraSubscription: Subscription | undefined;
   /** MediaStream object in use for streaming UserMedia data */
   private mediaStream: MediaStream | null = null;
-  @ViewChild('video', { static: true })
-  private video?: ElementRef<HTMLVideoElement>;
+  private readonly video = viewChild<ElementRef<HTMLVideoElement>>('video');
   /** Canvas for Video Snapshots */
-  @ViewChild('canvas', { static: true })
-  private canvas?: ElementRef<HTMLCanvasElement>;
+  private readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('canvas');
 
   /** width and height of the active video stream */
   private activeVideoSettings: MediaTrackSettings | null = null;
-
-  /**
-   * If the given Observable emits, an image will be captured and emitted through 'imageCapture' EventEmitter
-   */
-  @Input()
-  public set trigger(trigger: Observable<void>) {
-    if (this.triggerSubscription) {
-      this.triggerSubscription.unsubscribe();
-    }
-
-    // Subscribe to events from this Observable to take snapshots
-    this.triggerSubscription = trigger.subscribe(() => {
-      this.takeSnapshot();
-    });
-  }
 
   /**
    * If the given Observable emits, the active webcam will be switched to the one indicated by the emitted value.
@@ -107,6 +75,8 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
    *   false: cycle backwards through available webcams
    *   string: activate the webcam with the given id
    */
+
+  /* TODO
   @Input()
   public set switchCamera(switchCamera: Observable<boolean | string>) {
     if (this.switchCameraSubscription) {
@@ -126,6 +96,8 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
       }
     );
   }
+
+  */
 
   /**
    * Get MediaTrackConstraints to request streaming the given device
@@ -256,7 +228,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
         this.switchToVideoInput(null);
       })
       .catch((err: string) => {
-        this.initError.next({ message: err } as CameraInitError);
+        this.initError.emit({ message: err } as CameraInitError);
         // fallback: still try to load webcam, even if device enumeration failed
         this.switchToVideoInput(null);
       });
@@ -264,7 +236,6 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.stopMediaTracks();
-    this.unsubscribeFromSubscriptions();
     this.mediaStream = null;
   }
 
@@ -276,15 +247,16 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     // set canvas size to actual video size
     const track = this.getActiveVideoTrack();
     const _capabilities = track?.getCapabilities();
-    const _video = this.nativeVideoElement;
-    const dimensions = { width: this.width, height: this.height };
+    const _video = this.nativeVideoElement();
+    const dimensions = { width: this.width(), height: this.height() };
     if (_video?.videoWidth) {
       dimensions.width = _video.videoWidth;
       dimensions.height = _video.videoHeight;
     }
 
-    if (this.canvas && _video) {
-      const _canvas = this.canvas.nativeElement;
+    const canvas = this.canvas();
+    if (canvas && _video) {
+      const _canvas = canvas.nativeElement;
       _canvas.width = dimensions.width;
       _canvas.height = dimensions.height;
 
@@ -293,18 +265,20 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
       context2d?.drawImage(_video, 0, 0);
 
       // read canvas content as image
-      const mimeType: string = this.imageType
-        ? this.imageType
+      const imageType = this.imageType();
+      const mimeType: string = imageType
+        ? imageType
         : CameraComponent.DEFAULT_IMAGE_TYPE;
-      const quality: number = this.imageQuality
-        ? this.imageQuality
+      const imageQuality = this.imageQuality();
+      const quality: number = imageQuality
+        ? imageQuality
         : CameraComponent.DEFAULT_IMAGE_QUALITY;
       const dataUrl: string = _canvas.toDataURL(mimeType, quality);
 
       // get the ImageData object from the canvas' context.
       let imageData: ImageData | undefined;
 
-      if (this.captureImageData) {
+      if (this.captureImageData()) {
         console.log('takeSnapshot - getImageData');
         imageData = context2d?.getImageData(
           0,
@@ -315,7 +289,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
       }
 
       console.log('takeSnapshot - postImage');
-      this.imageCapture.next(new CameraImage(dataUrl, mimeType, imageData));
+      this.imageCapture.emit(new CameraImage(dataUrl, mimeType, imageData));
     }
   }
 
@@ -343,7 +317,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
   public switchToVideoInput(deviceId: string | null): void {
     this.videoInitialized = false;
     this.stopMediaTracks();
-    this.initWebcam(deviceId, this.videoOptions);
+    this.initWebcam(deviceId, this.videoOptions());
   }
 
   /**
@@ -354,15 +328,15 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     // here to trigger Angular change detection
   }
 
-  public get videoWidth(): number {
+  public videoWidth = computed<number>(() => {
     const videoRatio = this.getVideoAspectRatio();
-    return Math.min(this.width, this.height * videoRatio);
-  }
+    return Math.min(this.width(), this.height() * videoRatio);
+  });
 
-  public get videoHeight(): number {
+  public videoHeight = computed<number> (() => {
     const videoRatio = this.getVideoAspectRatio();
-    return Math.min(this.height, this.width / videoRatio);
-  }
+    return Math.min(this.height(), this.width() / videoRatio);
+  });
 
   public get videoStyleClasses(): string {
     let classes = '';
@@ -374,16 +348,14 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     return classes.trim();
   }
 
-  public get nativeVideoElement(): HTMLVideoElement | undefined {
-    return this.video?.nativeElement;
-  }
+  public nativeVideoElement = computed<HTMLVideoElement | undefined> (() => this.video()?.nativeElement)
 
   /**
    * Returns the video aspect ratio of the active video stream
    */
   private getVideoAspectRatio(): number {
     // calculate ratio from video element dimensions if present
-    const videoElement = this.nativeVideoElement;
+    const videoElement = this.nativeVideoElement();
     if (
       videoElement &&
       videoElement.videoWidth &&
@@ -395,7 +367,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     }
 
     // nothing present - calculate ratio based on width/height params
-    return this.width / this.height;
+    return this.width() / this.height();
   }
 
   /**
@@ -405,7 +377,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     deviceId: string | null,
     userVideoTrackConstraints: MediaTrackConstraints
   ): void {
-    const _video = this.nativeVideoElement;
+    const _video = this.nativeVideoElement();
     if (_video) {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         // merge deviceId -> userVideoTrackConstraints
@@ -431,7 +403,7 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
               );
 
             if (activeDeviceId) {
-              this.cameraSwitched.next(activeDeviceId);
+              this.cameraSwitched.emit(activeDeviceId);
             }
 
             // Initial detect may run before user gave permissions, returning no deviceIds. This prevents later camera switches. (#47)
@@ -452,13 +424,13 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
               });
           })
           .catch((err: DOMException) => {
-            this.initError.next({
+            this.initError.emit({
               message: err.message,
               mediaStreamError: err,
             } as CameraInitError);
           });
       } else {
-        this.initError.next({
+        this.initError.emit({
           message: 'Cannot read UserMedia from MediaDevices.',
         } as CameraInitError);
       }
@@ -477,13 +449,14 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
     // check for explicit mirror override parameter
     {
       let mirror = 'auto';
-      if (this.mirrorImage) {
-        if (typeof this.mirrorImage === 'string') {
-          mirror = String(this.mirrorImage).toLowerCase();
+      const mirrorImage = this.mirrorImage();
+      if (mirrorImage) {
+        if (typeof mirrorImage === 'string') {
+          mirror = String(mirrorImage).toLowerCase();
         } else {
           // WebcamMirrorProperties
-          if (this.mirrorImage.x) {
-            mirror = this.mirrorImage.x.toLowerCase();
+          if (mirrorImage.x) {
+            mirror = mirrorImage.x.toLowerCase();
           }
         }
       }
@@ -507,9 +480,9 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
    */
   private stopMediaTracks(): void {
     if (this.mediaStream && this.mediaStream.getTracks) {
-      if (this.nativeVideoElement) {
+      if (this.nativeVideoElement()) {
         // pause video to prevent mobile browser freezes
-        this.nativeVideoElement.pause();
+        this.nativeVideoElement()?.pause();
       }
 
       // getTracks() returns all media tracks (video+audio)
@@ -517,18 +490,6 @@ export class CameraComponent implements AfterViewInit, OnDestroy {
         track.stop();
         this.mediaStream?.removeTrack(track);
       });
-    }
-  }
-
-  /**
-   * Unsubscribe from all open subscriptions
-   */
-  private unsubscribeFromSubscriptions(): void {
-    if (this.triggerSubscription) {
-      this.triggerSubscription.unsubscribe();
-    }
-    if (this.switchCameraSubscription) {
-      this.switchCameraSubscription.unsubscribe();
     }
   }
 
