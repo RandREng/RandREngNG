@@ -141,6 +141,65 @@
           }
         }
       }
+    },
+    "msal-lib": {
+      "projectType": "library",
+      "root": "projects/msal-lib",
+      "sourceRoot": "projects/msal-lib/src",
+      "prefix": "r",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/msal-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/msal-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/msal-lib/tsconfig.spec.json",
+            "runner": "vitest",
+            "buildTarget": "::development",
+            "providersFile": "projects/msal-lib/src/test-providers.ts"
+          }
+        }
+      }
+    },
+    "randr-lib": {
+      "projectType": "library",
+      "root": "projects/randr-lib",
+      "sourceRoot": "projects/randr-lib/src",
+      "prefix": "r",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/randr-lib/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/randr-lib/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/randr-lib/tsconfig.spec.json",
+            "runner": "vitest",
+            "buildTarget": "::development",
+            "providersFile": "projects/randr-lib/src/test-providers.ts"
+          }
+        }
+      }
     }
+
   }
 }
