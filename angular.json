@@ -2,6 +2,9 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "cli": {
+    "schematicCollections": ["angular-eslint"]
+  },
   "schematics": {
     "@schematics/angular:application": {
       "style": "scss",
@@ -110,6 +113,16 @@
             "runner": "vitest",
             "buildTarget": "::development"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/camera-test/**/*.ts",
+              "projects/camera-test/**/*.html"
+            ],
+            "eslintConfig": "projects/camera-test/eslint.config.js"
+          }
         }
       }
     },
@@ -138,6 +151,16 @@
             "runner": "vitest",
             "buildTarget": "::development",
             "providersFile": "projects/camera/src/test-providers.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/camera/**/*.ts",
+              "projects/camera/**/*.html"
+            ],
+            "eslintConfig": "projects/camera/eslint.config.js"
           }
         }
       }
@@ -168,6 +191,16 @@
             "buildTarget": "::development",
             "providersFile": "projects/msal-lib/src/test-providers.ts"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/msal-lib/**/*.ts",
+              "projects/msal-lib/**/*.html"
+            ],
+            "eslintConfig": "projects/msal-lib/eslint.config.js"
+          }
         }
       }
     },
@@ -197,9 +230,18 @@
             "buildTarget": "::development",
             "providersFile": "projects/randr-lib/src/test-providers.ts"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/randr-lib/**/*.ts",
+              "projects/randr-lib/**/*.html"
+            ],
+            "eslintConfig": "projects/randr-lib/eslint.config.js"
+          }
         }
       }
     }
-
   }
 }

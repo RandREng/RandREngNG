@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: '@ngIM/randr-lib',
   preset: '../../jest.preset.js',

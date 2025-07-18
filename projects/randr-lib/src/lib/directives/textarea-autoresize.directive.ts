@@ -1,11 +1,12 @@
-import { Directive, HostListener, ElementRef, OnInit } from '@angular/core';
+import { Directive, HostListener, ElementRef, OnInit, inject } from '@angular/core';
 
 @Directive({
-  selector: 'textarea[randrAutoResize]',
+  selector: 'textarea[rAutoResize]',
   standalone: true,
 })
 export class TextareaAutoResizeDirective implements OnInit {
-  constructor(private elementRef: ElementRef) { }
+  private elementRef = inject(ElementRef);
+
 
   @HostListener(':input')
   onInput() {

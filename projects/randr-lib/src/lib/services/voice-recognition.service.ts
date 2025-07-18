@@ -11,8 +11,8 @@ export class VoiceRecognitionService {
   lastActive: number | undefined;
 
   public text = '';
-  public speechInput$: Subject<string> = new Subject();
-  public speechActive$: ReplaySubject<boolean> = new ReplaySubject();
+  public speechInput$ = new Subject<string>();
+  public speechActive$ = new ReplaySubject<boolean>();
   private tempWords = '';
 
   /**
@@ -65,7 +65,6 @@ export class VoiceRecognitionService {
     if (this.recognition) {
       this.recognition.start();
       this.lastActive = undefined;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       this.recognition.onend = (_condition: any) => {
         if (this.isStoppedSpeechRecog) {
           //        this.recognition.isActive = true;

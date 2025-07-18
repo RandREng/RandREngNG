@@ -2,9 +2,7 @@ import { IKeyCollection } from '../interfaces/key-collection.interface';
 
 export default class Dictionary<TKey extends keyof TValue, TValue>
   implements IKeyCollection<TKey, TValue> {
-  private items!: {
-    [index in TKey]: TValue;
-  };
+  private items!: Record<TKey, TValue>;
   private count = 0;
 
   add(key: TKey, value: TValue) {

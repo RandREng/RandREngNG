@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Route,
@@ -14,9 +14,9 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthGuard {
-  constructor(private authService: AuthService, private router: Router) { }
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -30,8 +30,7 @@ export class AuthGuard {
     return true;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  canActivateChild(_childRoute: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
+ canActivateChild(_childRoute: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
@@ -44,7 +43,6 @@ export class AuthGuard {
     return true;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canLoad(_route: Route, _segments: UrlSegment[]):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

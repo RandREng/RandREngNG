@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: '@ngIM/msal-lib',
   preset: '../../jest.preset.js',

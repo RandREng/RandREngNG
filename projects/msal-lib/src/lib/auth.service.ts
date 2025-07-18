@@ -1,5 +1,4 @@
-import { Inject, Injectable, signal } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { Injectable, signal, inject } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import {
   MsalBroadcastService,
@@ -18,7 +17,7 @@ import {
   RedirectRequest,
 } from '@azure/msal-browser';
 
-import { AlertService } from '@ngIM/randr-lib';
+import { AlertService } from 'randr-lib';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface Account extends AccountInfo {
@@ -31,17 +30,15 @@ interface Account extends AccountInfo {
   providedIn: 'root',
 })
 export class AuthService {
+  private msalGuardConfig = inject<MsalGuardConfiguration>(MSAL_GUARD_CONFIG);
+  private broadcastService = inject(MsalBroadcastService);
+  private msalService = inject(MsalService);
+  private alertService = inject(AlertService);
+
   public Authenticated = signal<boolean>(false)
   public initialized = false
 
-  constructor(
-    //    private router: Router,
-    //        private alertService: AlertService,
-    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
-    private broadcastService: MsalBroadcastService,
-    private msalService: MsalService,
-    private alertService: AlertService
-  ) {
+  constructor() {
     this.msalService.initialize().subscribe(() => {
       this.initialized = true;
     });

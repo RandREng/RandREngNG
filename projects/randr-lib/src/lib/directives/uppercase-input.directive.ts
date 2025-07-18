@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Directive, ElementRef, forwardRef, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Renderer2, inject } from '@angular/core';
 import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
-  selector: 'input[randrUppercase], textarea[randrUppercase]',
+  selector: 'input[rUppercase], textarea[rUppercase]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -17,7 +17,10 @@ import { DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   }
 })
 export class UppercaseDirective extends DefaultValueAccessor {
-  constructor(renderer: Renderer2, elementRef: ElementRef) {
+  constructor() {
+    const renderer = inject(Renderer2);
+    const elementRef = inject(ElementRef);
+
     super(renderer, elementRef, false);
   }
 

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
@@ -10,7 +10,7 @@ import { RippleModule } from 'primeng/ripple';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'msal-sub-menu',
+  selector: 'r-sub-menu',
   template: `
     <span>
       @if (authenticated()) {

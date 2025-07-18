@@ -6,7 +6,7 @@ import { LoadingComponent } from '../loading/loading.component';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'randr-page',
+  selector: 'r-page',
   imports: [CommonModule, ErrorComponent, LoadingComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss'

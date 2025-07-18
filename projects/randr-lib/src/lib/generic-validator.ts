@@ -67,7 +67,7 @@ export class GenericValidator {
 }
  */
 export class GenericValidator {
-  DisplayMessages: { [key: string]: string } = {};
+  DisplayMessages: Record<string, string> = {};
   // Provide the set of valid validation messages
   // Structure:
   // controlName1: {
@@ -80,15 +80,15 @@ export class GenericValidator {
   // }
   constructor(
     private container: FormGroup,
-    private validationMessages: { [key: string]: { [key: string]: string } }
+    private validationMessages: Record<string, Record<string, string>>
   ) {
     this.container.valueChanges.subscribe(() => {
       this.DisplayMessages = this.processMessages(this.container);
     })
   }
 
-  private processMessages(container: FormGroup): { [key: string]: string } {
-    const messages: { [key: string]: string } = {};
+  private processMessages(container: FormGroup): Record<string, string> {
+    const messages: Record<string, string> = {};
     for (const controlKey in container.controls) {
       if (Object.prototype.hasOwnProperty.call(container.controls, controlKey)) {
         const c = container.controls[controlKey];

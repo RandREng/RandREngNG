@@ -1,4 +1,4 @@
-<div class="camera-wrapper" (click)="imageClick.emit()">
+<div class="camera-wrapper" (click)="imageClick.emit()" (keyup.enter)="imageClick.emit()" tabindex="0">
   <video
     #video
     [width]="videoWidth()"
@@ -11,7 +11,7 @@
   ></video>
   @if (allowCameraSwitch() && availableVideoInputs.length > 1 && videoInitialized)
   {
-  <div class="camera-switch" (click)="rotateVideoInput(true)"></div>
+  <div class="camera-switch" (click)="rotateVideoInput(true)" (keyup.enter)="rotateVideoInput(true)" tabindex="-1"></div>
   }
   <canvas #canvas [width]="width()" [height]="height()"></canvas>
   @if (showResolution()) {

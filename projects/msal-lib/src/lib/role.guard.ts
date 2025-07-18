@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Route,
@@ -14,9 +14,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class RoleGuard {
-  constructor(private authService: AuthService) { }
+  private authService = inject(AuthService);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivate(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -27,7 +26,6 @@ export class RoleGuard {
     return this.authService.hasCommonRole(expectedRoles);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canActivateChild(childRoute: ActivatedRouteSnapshot, _state: RouterStateSnapshot):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -38,7 +36,6 @@ export class RoleGuard {
     return this.authService.hasCommonRole(expectedRoles);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   canLoad(route: Route, _segments: UrlSegment[]):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

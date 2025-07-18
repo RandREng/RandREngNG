@@ -1,7 +1,7 @@
 <div class="dialog-container">
   <h1>Hello, CameraTest</h1>
   <div class="dialog-content">
-    <r-Camera [height]=1024 [width]=1024 [allowCameraSwitch]=true (imageCapture)="onCapture($event)" [showResolution]=true (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)" [imageQuality]="1" />
+    <r-camera [height]=1024 [width]=1024 [allowCameraSwitch]=true (imageCapture)="onCapture($event)" [showResolution]=true (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)" [imageQuality]="1" />
 
     <!--     <webcam *ngIf="showWebcam"
             [switchCamera]="nextWebcamObservable"
@@ -12,6 +12,5 @@
   </div>
   <div class="dialog-actions">
     <button (click)="onClick()">Snap</button>
-    <button (click)="onClose()">Done</button>
   </div>
 </div>

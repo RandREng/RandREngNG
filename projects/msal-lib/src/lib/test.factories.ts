@@ -68,7 +68,7 @@ export function TestInstanceFactory(): IPublicClientApplication {
 }
 
 export function TestInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>();
+  const protectedResourceMap = new Map<string, string[]>();
   protectedResourceMap.set(
     environment.apiConfig.uri,
     environment.apiConfig.scopes

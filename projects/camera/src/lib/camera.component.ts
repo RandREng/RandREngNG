@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, computed, input, output, viewChild } from '@angular/core';
-
-import { Observable, Subscription } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, OnDestroy, computed, input, output, viewChild } from '@angular/core';
 
 import { CameraImage } from './camera-image';
 import { CameraInitError } from './camera-init-error';
@@ -8,7 +6,7 @@ import { CameraMirrorProperties } from './camera-mirror-properties';
 import { CameraUtility } from './camera-utility';
 
 @Component({
-  selector: 'r-Camera',
+  selector: 'r-camera',
   imports: [],
   templateUrl: './camera.component.html',
   styleUrl: './camera.component.scss'
@@ -245,8 +243,8 @@ export class CameraComponent  implements AfterViewInit, OnDestroy {
   public takeSnapshot(): void {
     console.log('takeSnapshot');
     // set canvas size to actual video size
-    const track = this.getActiveVideoTrack();
-    const _capabilities = track?.getCapabilities();
+//    const track = this.getActiveVideoTrack();
+//    const _capabilities = track?.getCapabilities();
     const _video = this.nativeVideoElement();
     const dimensions = { width: this.width(), height: this.height() };
     if (_video?.videoWidth) {

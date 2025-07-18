@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { MessageService } from 'primeng/api';
@@ -7,19 +7,19 @@ import { ToastModule } from 'primeng/toast';
 import { AlertService, alertItem } from '../../services/alert.service';
 
 @Component({
-  selector: 'randr-alert',
+  selector: 'r-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
   imports: [ToastModule],
   providers: [MessageService]
 })
 export class AlertComponent {
+  private alertService = inject(AlertService);
+  private messageService = inject(MessageService);
+
   alerts: alertItem[] = [];
 
-  constructor(
-    private alertService: AlertService,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.alertService.Alerts.pipe(takeUntilDestroyed()).subscribe((alert) => {
       this.alerts.push(alert);
       this.messageService.add({

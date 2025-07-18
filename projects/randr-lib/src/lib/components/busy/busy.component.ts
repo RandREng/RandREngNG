@@ -3,7 +3,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { BusyService } from '../../services/busy.service';
 
 @Component({
-  selector: 'randr-busy',
+  selector: 'r-busy',
   templateUrl: './busy.component.html',
   styleUrls: ['./busy.component.scss'],
   imports: [ProgressBarModule]

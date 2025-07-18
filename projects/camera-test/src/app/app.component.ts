@@ -1,5 +1,4 @@
 import { Component, signal, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { CameraComponent, CameraImage, CameraInitError } from "Camera";
 
 @Component({
@@ -30,8 +29,5 @@ export class AppComponent {
     console.log(deviceId);
   }
 
-
-  public onClose() {
-  }
 
 }
